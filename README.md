@@ -1,21 +1,21 @@
 # The Genshin Impact Dataset (GID) for SLAM
-The Genshin impact dataset (GID) is collected in the Genshin Impact game<sup><a href="https://genshin.hoyoverse.com">[1]</a></sup> for visual SLAM. It currently consists of 60 individual sequences (over 3 hours) and covers a wide range of scenes that are rare, hard, or dangerous for field collection in real world (such as dull deserts, dim caves, and lush jungles), providing great opportunities for SLAM evaluation and benchmark. Moreover, it includes a large number of visual challenges (such as low illumination) to test the robustness of various SLAM algorithms.
+The Genshin impact dataset (GID) is collected in the Genshin Impact game<sup><a href="https://genshin.hoyoverse.com">[1]</a></sup> for visual SLAM. It currently consists of 60 individual sequences (over 3 hours in total) and covers a wide range of scenes that are rare, hard, or dangerous for field collection in real world (such as dull deserts, dim caves, and lush jungles). It provides great opportunities for SLAM evaluation and benchmark. Moreover, it includes a large number of visual challenges (such as low illumination and low texture scenes) to test the robustness of various SLAM algorithms.
 <p align="center"><img src="./figures/fig-overall.gif" width=80%></p>
 
 ## 1. Dataset Organization
 The dataset is generally composed of two parts: sequences (blue part) and support files (orange part), as the following figure shows.
 <p align="center"><img src="./figures/fig-dataset.png" width=90%></p>
 
-**In the sequences part**, each sequence contains several files for the convenience of usage. We will take the Seq-001 as an example and elaborate next.
+**In the sequences part**, each sequence contains several files for the convenience of usage. We take the `Seq-001` as an example and elaborate next.
 
 * **`Seq-001.mp4`**
-The recorded video from the Genshin Impact game has a 1436×996 resolution at 30 FPS.
+The recorded video from the Genshin Impact game which can be further processed according to different needs. It has a 1436 (width) × 996 (height) resolution at 30 FPS.
 
 * **`Seq-001.png`**
-The content preview of the recorded video for a fast grasp without playing it, which summarizes the resolution (width × height), duration (sec), FPS, and frames in total.
+The content preview of the recorded video for a fast grasp without playing it. It summarizes the resolution (width × height), duration (sec), FPS, and frames in total.
 
 * **`Frames-Sparse`**
-It is a folder storing split frames from the recorded video. For the convenience of end users, we split the whole video in advance with a frame interval of 10 (sample 1 frame every 10 frames).
+It is a folder storing split frames from the recorded video. For the convenience of end users, we split the whole video in advance with a frame interval of 10 (extract 1 frame every 10 frames).
 
 * **`Groundtruth-EuRoC.txt`**
 For the convenience of users, we provide groundtruth poses of split frames in both EuRoC and TUM format. This file records poses in EuRoC<sup><a href="https://projects.asl.ethz.ch/datasets/doku.php?id=kmavvisualinertialdatasets">[2]</a></sup> format:
@@ -26,24 +26,24 @@ This file records poses in TUM<sup><a href="https://cvg.cit.tum.de/data/datasets
     > timestamp[s] pos_x[m] pos_y[m] pos_z[m] quat_x quat_y quat_z quat_w
 
 * **`Timestamps.txt`**
-This file stores the corresponding timestamps of split frames in the recorded video. The unit is nanosecond (10^-9 second).
+This file stores the corresponding timestamps of split frames in the `Frames-Sprase` folder. The time unit is nanosecond (10<sup>-9</sup> second).
 
 **In the support files part**, it contains camera intrinsics and tool scripts.
 
 * **`Intrinsics.yaml`**
-This file records the focal length (fx and fy) and principle point (cx and cy) for the dataset. The data is organized in standard yaml format, which is easy for data input and output.
+This file records the focal length (fx and fy) and principle point (cx and cy) for the pinhole camera model we use. It is organized in standard yaml format, which is easy for data input and output.
 
 * **`tool-splitVideo.py`**
-This Python script is used for splitting the original video into separate frames according to user settings. The only launch parameter for this script is the video path that you want to process. As for the other parameters, users can set them in an interactive manner. All interactive parameters are summarized below:
-  * **Clipping start time**: second, default: 0s
-  * **Clipping end time**: second, default: whole video
+This Python script is used for splitting the original video into separate frames according to user settings. The only launch parameter for this script is the path of the video you want to process. As for the other parameters, users can set them in an interactive manner. All interactive parameters are summarized below:
+  * **Clipping start time**: start timestamp of clipping, unit: second, default: 0s
+  * **Clipping end time**: end timestamp of clipping, unit: second, default: the end of the whole video
   * **Sampling interval N**: sample one frame every N frame, default: output every frame
-  * **Scale for output frame**: resize and save frame images, default: 1 for the original scale
-  * **Type for output frame**: file type, default: .jpg
-  * **Name format for frame**: select from Timestamp format (12 digits to represent timestamp in nanoseconds) and Frame index format (4 digits to represent frame index in the original video). Default: Timestamp format.
+  * **Scale for output frame**: scale factor for output frame images, default: 1 for the original size
+  * **Type for output frame**: file type for output frame images, default: .jpg
+  * **Name format for frame**: name format for output frame images, select from Timestamp format (12 digits to represent timestamp in nanoseconds) and Frame index format (4 digits to represent frame index in the original video). Default: Timestamp format.
 
 * **`tool-resizeFrames.py`**
-This Python script is used for the resampling of existing frame images. It requires three launch parameters:
+This Python script is used for the resizing of existing frame images. It requires three launch parameters:
   * **Search folder**: the folder path of frames need to be processed
   * **Image type**: the type of images in the folder
   * **Scale**: the scale for resizing
@@ -63,27 +63,27 @@ The following figure shows the distribution of sequences in different regions. Y
 Benifiting from the large and diverse game world, the sequences in GID also have a great diversity, which we summarize in the following aspects.
 
 **Scene**
-The dataset involves a wide range of scenes, including desert, cave, jungle, and so on. The following figure shows some type of scenes. For example, the user can test the robustness of their SLAM with dim cave scenes. 
+The dataset involves a wide range of scenes, including deserts, caves, jungles, and so on. The following figure shows some type of scenes. For example, the user can test the robustness toward low light conditions of their SLAM in dim cave scenes.
 <p align="center"><img src="./figures/fig-scenes.png" width=80%></p>
 
 **Time**
-The sequences in GID generally cover a whole day, from morning to afternoon and night. This potentially enables experiments for SLAM in changing illumination condition. The following figure shows the coverage of a whole day.
+The sequences in GID generally cover a whole day, from morning to afternoon and night. This potentially enables experiments for SLAM in changing illumination conditions. The following figure shows the coverage of a whole day.
 <p align="center"><img src="./figures/fig-time.png" width=80%></p>
 
 **Weather**
 The dataset includes various weather conditions, such as clear, cloudy, and raining scenes. The following figure shows some examples of different weather conditions.
 <p align="center"><img src="./figures/fig-weather.png" width=80%></p>
 
-**Visual Challenge for SLAM**
+**Visual Challenges for SLAM**
 The dataset contains various visual challenges for SLAM algorithms, such as low-light, low-texture. Sequences of these challenges may boost the development and benchmark of visual SLAM in challenging environments. The following figure shows some representitative challenges in the dataset.
 <p align="center"><img src="./figures/fig-challenge.png" width=80%></p>
 
 **Duration**
-The sequences cover a wide range of durations, from 59 seconds (Seq-042) to 333 seconds (Seq-049 & Seq-058), which provides the potential to test the scability of SLAM. The following figure shows the distribution of sequences in different durations.
+The sequences cover a wide range of durations, from 59 seconds (`Seq-042`) to 333 seconds (`Seq-049` & `Seq-058`), which provides the possibility to test the scability of SLAM. The following figure shows the distribution of sequences in different durations.
 <p align="center"><img src="./figures/fig-duration.png" width=80%></p>
 
 ## 3. Downloads
-We upload all 60 sequences and provide two ways to download the dataset: Google Drive and Baidu Netdisk. You can click [Google Drive](https://drive.google.com/drive/folders/1ha6UrQTV81JwI_4EBYTam3g1KYAPMosT?usp=drive_link) or [Baidu Netdisk](https://pan.baidu.com/s/17JGY9j_ZGXKJSLJd_MDK0Q?pwd=bsj7) for downloading the whole dataset (about 22 GB totally) according to your network environment, or you can download individual sequences by clicking corresponding links in the following table.
+We upload all 60 sequences and provide two ways to download the dataset: Google Drive and Baidu Netdisk. You can click [Google Drive](https://drive.google.com/drive/folders/1ha6UrQTV81JwI_4EBYTam3g1KYAPMosT?usp=drive_link) or [Baidu Netdisk](https://pan.baidu.com/s/17JGY9j_ZGXKJSLJd_MDK0Q?pwd=bsj7) for downloading the whole dataset (about 22 GB totally) according to your network environment. Or you can download individual sequences by clicking corresponding links in the following table.
 
 <p align="center">
 <table class="tg">
@@ -695,7 +695,7 @@ We upload all 60 sequences and provide two ways to download the dataset: Google 
   <td class="tg-baqh">
   <img src="/figures/gifs/Seq-060.gif" width="140" height="90">
   </td>
-  <td class="tg-baqh"><a href="">Link</a></td>
+  <td class="tg-baqh"><a href="https://drive.google.com/drive/folders/1P8rgj0fDASyenOO70mzc9xeGbJg33h8N?usp=drive_link">Link</a></td>
   <td class="tg-baqh"><a href="https://pan.baidu.com/s/14W0rOPCjwuHFOFPaW3RHaQ?pwd=b1ql">Link</a></td>
   </tr>
 </tbody>
@@ -704,79 +704,76 @@ We upload all 60 sequences and provide two ways to download the dataset: Google 
 
 ## 4. Technical Details
 ### 4.1 Data Collection & Pre-processing
-All the sequences are collected with fixed and consistent settings. The computer used for data collection is equipped with an Intel Core i9-9900K CPU, 64GB RAM, and an NVIDIA Titan RTX GPU. We first record videos from the Genshin Impact game, where the videos are saved in `.mkv` format. The original resolution of the video is 1920 × 1200 @ 30FPS, as the following figure shows.
+All the sequences are collected with fixed and consistent camera settings. The computer used for data collection is equipped with an Intel Core i9-9900K CPU, 64GB RAM, and an NVIDIA Titan RTX GPU. We first record videos from the Genshin Impact game, where the videos are saved in `.mkv` format. The original resolution of the recorded video is 1920 (width) × 1200 (height) @ 30FPS, as the following figure shows.
 <p align="center"><img src="./figures/fig-original-video.png" width=80%></p>
 
-Then, we write Python scripts to split the recorded videos into frames and save them in `.jpg` format, where we sample 1 frame every 10 frames. Moreover, we simultaneously crop the frame images to 1436 × 996 to remove unrelated parts in the original videos.
+Then, we write Python scripts to split the recorded videos into frames and save them in `.jpg` format, where we sample 1 frame every 10 frames. Moreover, we simultaneously crop the frame images to 1436 × 996 to remove unrelated parts in the original videos. The following figure shows the cropped and outputted frames of the `Seq-046` sequence.
 <p align="center"><img src="./figures/fig-frames.png" width=80%></p>
 
 ### 4.2 Groundtruth Estimation & Reconstruction
-To obtain the precise poses of the camera, we use the ColMap software<sup><a href="https://colmap.github.io">[4]</a></sup> for groundtruth estimation and 3D reconstruction. We input all the frames of a sequence to ColMap and obtain the camera poses and 3D points. We use "automatic reconstruction" mode with the following parameters:
+To obtain the precise poses of the camera, we use the ColMap software<sup><a href="https://colmap.github.io">[4]</a></sup> for groundtruth estimation and 3D reconstruction. We input all the frames in a sequence to ColMap and obtain the camera poses and 3D points. We use "automatic reconstruction" mode with the following parameters:
   * Data type: Video frames
   * Quality: Medium
   * Shared intrinsics: Yes
   * Sparse model: Yes
   * Dense model: Yes
 
-For other parameters, we let ColMap manage them as default. The following figure shows the estimated camera poses and 3D points of the `Seq-046` sequence in ColMap.
-
+For other parameters, we let ColMap manage them as default. The following figure shows the estimated camera poses and point cloud of the `Seq-046` sequence in ColMap.
 <p align="center"><img src="./figures/fig-colmap.gif" width=80%></p>
 
-We can also visualize reconstructed 3D meshes with MeshLab, as the following figure shows.
-
+We can also visualize reconstructed 3D meshes with MeshLab<sup><a href="https://www.meshlab.net">[5]</a></sup> software, as the following figure shows.
 <p align="center"><img src="./figures/fig-meshlab.gif" width=80%></p>
 
 ### 4.3 Post-processing
-After reconstruction, we export the trajectory in ColMap to a `images.txt` file, which contains the estimated camera poses. We then write Python scripts to convert the `images.txt` file to  standard TUM and EuRoC format files. Moreover, we export the estimated camera intrinsics in ColMap to a `cameras.txt` file. 
+After reconstruction, we export the estimated poses and trajectory in ColMap to a `images.txt` file, which contains the estimated camera poses. We then write Python scripts to convert the `images.txt` file to the aforementioned standard TUM and EuRoC formats. Moreover, we export the estimated camera intrinsics in ColMap to a `cameras.txt` file. 
 
 ## 5. SLAM Demos with GID
-The following figure briefly demonstrates the performance of ORB-SLAM2<sup><a href="https://github.com/raulmur/ORB_SLAM2">[5]</a></sup> (monocular) on our dataset, which is a classic and sophisticated visual SLAM. For the best reading, you may click [here](./figures/orb-slam2-perf.mp4) to download and view the whole video of testing (50s).
+The following figure briefly demonstrates the performance of ORB-SLAM2<sup><a href="https://github.com/raulmur/ORB_SLAM2">[6]</a></sup> (monocular) on our dataset, which is a classic and sophisticated visual SLAM. For the best understanding, you may click [here](./figures/orb-slam2-perf.mp4) to download and view the whole video of testing (50s).
 <p align="center"><img src="./figures/fig-orb-slam2-perf.gif" width=80%></p>
 
-Generally, the ORB-SLAM2 performs well in various scenes, even in some challenging scenes, demonstrating the feasibility of our dataset for running SLAM algorithms. For example, we compare the estimated trajectory for Seq-060 and the groundtruth poses with EVO tool<sup><a href="https://github.com/MichaelGrupp/evo">[6]</a></sup>, as the following figure shows.
+Generally, the ORB-SLAM2 performs well in various scenes, even in some challenging scenes, demonstrating the feasibility of our dataset for running SLAM algorithms. For example, we compare the estimated trajectory for `Seq-060` and the groundtruth poses with EVO tool<sup><a href="https://github.com/MichaelGrupp/evo">[7]</a></sup>, as the following figure shows.
 <p align="center"><img src="./figures/fig-orb-perf.gif" width=80%></p>
 
-After scale and trajectory alignment, it can be seen that the estimated poses are generally consistent with groundtruth. On the one side, this demonstrates the feasibility of our dataset, on the other side, this shows the high accuracy of groundtruth estimated by ColMap.
+After scale and trajectory alignment, it can be seen that the estimated poses are generally consistent with groundtruth. On the one side, this demonstrates the feasibility of our dataset; on the other side, this shows the high accuracy of groundtruth estimated by ColMap.
 
 ## 6. FAQs
 ### Q1: What are the features and advantages of the proposed dataset?
 **Answer:**
 
-* Compared with field collected data, our dataset contains more diverse scenes for SLAM to test. Moreover, many areas that are difficult or dangerous to collect in practice, such as the desert, the caves, and snow mountains.
+* Compared with field-collected sequences, our dataset contains more diverse scenes for SLAM to test. Moreover, many scenes in the dataset may be difficult or dangerous to collect in real world, such as the desert, the caves, and snow mountains.
 
 * Compared with sequences collected in simulation environments, the proposed dataset has the following advantages.
-  * The scenes are exquisite and beautiful in the Genshin Impact game, compared with existing simulation. Generally, few simulation software (such as Gazebo<sup><a href="https://gazebosim.org">[7]</a></sup>, XTDrone<sup><a href="https://github.com/robin-shaun/XTDrone">[8]</a></sup>) provides such exquisite scenes. Some sophisticated simulation software (such as AirSim<sup><a href="https://microsoft.github.io/AirSim">[9]</a></sup>, Nvidia Omniverse<sup><a href="https://developer.nvidia.com/omniverse">[10]</a></sup>) may provide exquisite scenes, but it is difficult to get involved and design your own world. 
-  * It saves a lot of time and effort to build the scenes in simulation softwares. It is time-consuming and laborious to build a scene in simulation software from scratch, especially for large scenes. But we can directly collect sequences in the game, which is much easier and more efficient.
-  * Existing simulation platforms are difficult to simulate visual challenges we wanted for SLAM tests. For example, XTDrone typically cannot simulate weather changes. However, recored sequences in the dataset contains photorealistic weather changes, such as sunny, rainy, snowy, and foggy.
+  * The scenes are exquisite and beautiful in the Genshin Impact game. Generally, few simulation platforms (such as Gazebo<sup><a href="https://gazebosim.org">[8]</a></sup>, XTDrone<sup><a href="https://github.com/robin-shaun/XTDrone">[9]</a></sup>) provides such simulated quality. Some sophisticated simulation platforms (such as AirSim<sup><a href="https://microsoft.github.io/AirSim">[10]</a></sup>, Nvidia Omniverse<sup><a href="https://developer.nvidia.com/omniverse">[11]</a></sup>) may provide high quality, but they are usually difficult to get involved and design your own world. 
+  * It is time-consuming and laborious to build a high-quality scene in simulation software from scratch, especially for large scenes. However, we can directly use the built scenes and collect sequences in the game, which is more efficient.
+  * Existing simulation platforms are difficult to simulate photorealistic visual challenges we wanted for SLAM tests. For example, XTDrone typically cannot simulate different weather conditions. However, we can easily recored sequences containing photorealistic weather changes in the game, such as sunny, rainy, snowy, and foggy.
 
-### Q2: How the groundtruth poses are estimated? What is the accuracy? How you guarantee the reliability?
+### Q2: How the groundtruth poses are estimated? What about the accuracy? How you guarantee its reliability?
 **Answer:**
 
 * As we mentioned before, we use the ColMap software for the groundtruth pose estimation, which is a popular and sophisticated software for 3D reconstruction. We use the "automatic reconstruction" mode with medium quality to obtain the groundtruth poses. The estimated poses are generally accurate.
 
-* Since we do not have the real poses of camera, we evaluate the accuracy of estimated groundtruth with reprojection error, which is automatically calculated and provided in ColMap software. The reprojections error indicates the average distance between the reprojected 3D points and the corresponding 2D points in the image. The following figure shows the corresponding reprojection error of each sequence in the dataset. Generally, the overall of all sequences is 0.884378 (less than 1 pixel), which is very small.
-
+* Since we do not have the real poses of camera, we evaluate the accuracy of estimated groundtruth with reprojection error, which is automatically calculated in ColMap software. The reprojection error indicates the average distance between the reprojected 3D points and the corresponding 2D points in the image. The following figure shows the corresponding reprojection error of each sequence in the dataset. Generally, the overall of all sequences is 0.88 (less than 1 pixel), which is very small.
 <p align="center"><img src="./figures/fig-gt-accuracy.png" width=80%></p>
 
 * We cannot obtain the real groundtruth poses, so we focus more on the consistency of estimated trajectory and reconstructed 3D points. We think that if the consistency is high, then the estimated trajectory is accurate. Of course, this is not absolute, and the estimated groundtruth may also have errors. We will continue to explore and adopt more accurate methods to estimate the groundtruth.
 
-* Moreover, it should be noticed that the scale of the estimated trajectory is not absolute, and the groundtruth trajectory does not have absolute scale information. Therefore, remember to perform scale alignment before evaluating the SLAM performance. The scale of different sequences is not comparable.
+* Moreover, it should be noticed that the scale of the estimated trajectory is not absolute due to the scale ambiguity, and the groundtruth trajectory does not have absolute scale information. Therefore, remember to perform scale alignment before evaluating estimated trajectories from your SLAM. The scale of different sequences is not comparable.
 
 ### Q3: How can I use the dataset to evaluate my SLAM?
-* **Step1**: Download the sequences you need and useful tools in the dataset with provided links.
-* **Step2**: (optional) Resample the downloaded sequence video with provided Python script according to your needs.
+* **Step1**: Download the sequences and useful tools you need in the dataset with provided links.
+* **Step2**: (optional) Resample the downloaded video with provided Python script according to your needs.
 * **Step3**: Run your interested visual odometry or SLAM algorithm and save the estimated trajectory to a file.
 * **Step4**: Evaluate the performance of your algorithm with the provided groundtruth poses with various tools, such as the EVO.
-
 
 ## 7. References
 * [1] https://genshin.hoyoverse.com
 * [2] https://projects.asl.ethz.ch/datasets/doku.php?id=kmavvisualinertialdatasets
 * [3] https://cvg.cit.tum.de/data/datasets/rgbd-dataset
 * [4] https://colmap.github.io
-* [5] https://github.com/raulmur/ORB_SLAM2
-* [6] https://github.com/MichaelGrupp/evo
-* [7] https://gazebosim.org
-* [8] https://github.com/robin-shaun/XTDrone
-* [9] https://microsoft.github.io/AirSim
-* [10] https://developer.nvidia.com/omniverse
+* [5] https://www.meshlab.net
+* [6] https://github.com/raulmur/ORB_SLAM2
+* [7] https://github.com/MichaelGrupp/evo
+* [8] https://gazebosim.org
+* [9] https://github.com/robin-shaun/XTDrone
+* [10] https://microsoft.github.io/AirSim
+* [11] https://developer.nvidia.com/omniverse
