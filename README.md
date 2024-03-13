@@ -1,6 +1,27 @@
 # The Genshin Impact Dataset (GID) for SLAM
-The Genshin impact dataset (GID) is collected in the Genshin Impact game<sup><a href="https://genshin.hoyoverse.com">[1]</a></sup> for visual SLAM. It currently consists of 60 individual sequences (over 3 hours in total) and covers a wide range of scenes that are rare, hard, or dangerous for field collection in real world (such as dull deserts, dim caves, and lush jungles). It provides great opportunities for SLAM evaluation and benchmark. Moreover, it includes a large number of visual challenges (such as low illumination and low texture scenes) to test the robustness of various SLAM algorithms.
-<p align="center"><img src="./figures/fig-overall.gif" width=80%></p>
+The Genshin impact dataset (GID) is collected in the Genshin Impact game<sup><a href=" ">[1]</a ></sup> for visual SLAM. It currently consists of 60 individual sequences (over 3 hours in total) and covers a wide range of scenes that are rare, hard, or dangerous for field collection in real world (such as dull deserts, dim caves, and lush jungles). It provides great opportunities for SLAM evaluation and benchmark. Moreover, it includes a large number of visual challenges (such as low illumination and low texture scenes) to test the robustness of various SLAM algorithms. It is part of our work *How Challenging is a Challenge? CEMS: a Challenge Evaluation Module for SLAM Visual Perception*. 
+<p align="center">< img src="./figures/fig-overall.gif" width=80%></p >
+
+# Citation
+If you use some resource from this dataset, please cite the paper as:
+
+## BibTeX
+```
+@article{Zhao2024CEMS,
+  title={How Challenging is a Challenge? CEMS: a Challenge Evaluation Module for SLAM Visual Perception},
+  author={Xuhui Zhao and Zhi Gao and Hao Li and Hong Ji and Hong Yang and Chenyang Li and Hao Fang and Ben M. Chen},
+  journal={Journal of Intelligent \& Robotic Systems},
+  year={2024},
+  volume={110},
+  number=42,
+  pages={1--19},
+  doi={https://doi.org/10.1007/s10846-024-02077-4}
+}
+```
+
+## APA
+Zhao, X., Gao, Z., Li, H., Ji, H., Yang, H., Li, C., Fang, H., & M. Chen, B. (2024). How Challenging is a Challenge? CEMS: a Challenge Evaluation Module for SLAM Visual Perception. Journal of Intelligent & Robotic Systems.
+
 
 ## 1. Dataset Organization
 The dataset is generally composed of two parts: sequences (blue part) and support files (orange part), as the following figure shows.
