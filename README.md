@@ -1,7 +1,6 @@
 # The Genshin Impact Dataset (GID) for SLAM
-The Genshin impact dataset (GID) is collected in the Genshin Impact game<sup><a href=" ">[1]</a ></sup> for visual SLAM. It currently consists of 60 individual sequences (over 3 hours in total) and covers a wide range of scenes that are rare, hard, or dangerous for field collection in real world (such as dull deserts, dim caves, and lush jungles). It provides great opportunities for SLAM evaluation and benchmark. Moreover, it includes a large number of visual challenges (such as low illumination and low texture scenes) to test the robustness of various SLAM algorithms. It is part of our work How Challenging is a Challenge? CEMS: a Challenge Evaluation Module for SLAM Visual Perception. 
-<p align="center">< img src="./figures/fig-overall.gif" width=80%></p>
-
+The Genshin impact dataset (GID) is collected in the Genshin Impact game<sup><a href=" ">[1]</a ></sup> for visual SLAM. It currently consists of 60 individual sequences (over 3 hours in total) and covers a wide range of scenes that are rare, hard, or dangerous for field collection in real world (such as dull deserts, dim caves, and lush jungles). It provides great opportunities for SLAM evaluation and benchmark. Moreover, it includes a large number of visual challenges (such as low illumination and low texture scenes) to test the robustness of various SLAM algorithms. It is part of our work *How Challenging is a Challenge? CEMS: a Challenge Evaluation Module for SLAM Visual Perception*.
+<p align="center"><img src="./figures/fig-overall.gif" width=80%></p>
 
 # Citation
 If you use some resource from this dataset, please cite the paper as:
